@@ -1,5 +1,6 @@
 import pyglet
 from pyglet import shapes
+from pyglet import clock
 import time
 
 # Set up global variables
@@ -59,17 +60,6 @@ def on_draw():
                     batch = batch))
     window.clear
     batch.draw()
-'''
-@window.event
-def on_draw():
-    batch = pyglet.graphics.Batch()
-    buffer = []
-    for i in range(0,10):
-        buffer.append(shapes.Rectangle(200, 200 + 20 * i, 10, 10, color=(55, 55, 255), batch=batch))
-    window.clear
-    batch.draw()
-'''
 
-
-
+clock.schedule_interval(my_ant.iterate, .1)
 pyglet.app.run()
