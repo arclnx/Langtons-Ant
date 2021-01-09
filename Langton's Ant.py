@@ -1,12 +1,18 @@
 import pyglet
 from pyglet import shapes
+import time
 
-WIDTH = 10
-HEIGHT = 10
-COLORS = [(0,0,0), (255,255,255)]
-GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)]
+# Set up global variables
+WIDTH = 250
+HEIGHT = 250
+SIZE = 4
+COLORS = [(255,0,0), (0,0,255)]
+GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
 RULES = ['L', 'R']
+# Set up pyglet window
+window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
 
+# Ant
 class Ant:
     def __init__(self, x_pos, y_pos):
         self.location = [x_pos, y_pos]
@@ -26,7 +32,8 @@ class Ant:
     
     def iterate(self):
         index = COLORS.index(GRID[self.location[0]][self.location[1]])  # Find index of current color
-        GRID[self.location[0]][self.location[1]] = (index + 1) % len(COLORS)  # Set cell to next color
+        GRID[self.location[0]][self.location[1]] = COLORS[
+                (index + 1) % len(COLORS)]  # Set cell to next color
         self.turn(RULES[index])  # Turn
         self.move(1)  # Move
 
@@ -36,3 +43,21 @@ class Ant:
         print('location' + str(self.location))
 
 my_ant = Ant(0,0)
+
+def update():
+    buffer = []
+    batch = pyglet.graphics.Batch()
+    for x in range(WIDTH):
+        for y in range(HEIGHT):
+            buffer.append(shapes.Rectangle(
+                    x * SIZE, 
+                    y * SIZE,
+                    SIZE - 1,
+                    SIZE - 1,
+                    color=GRID[x][y],
+                    batch = batch))
+    window.clear()
+    batch.draw
+pyglet.clock.schedule_interval(on_draw, 1/60)
+pyglet.app.run()
+            
