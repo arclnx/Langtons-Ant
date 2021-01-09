@@ -44,9 +44,10 @@ class Ant:
 
 my_ant = Ant(0,0)
 
-def update():
-    buffer = []
+@window.event
+def on_draw():
     batch = pyglet.graphics.Batch()
+    buffer = []
     for x in range(WIDTH):
         for y in range(HEIGHT):
             buffer.append(shapes.Rectangle(
@@ -56,8 +57,19 @@ def update():
                     SIZE - 1,
                     color=GRID[x][y],
                     batch = batch))
-    window.clear()
-    batch.draw
-pyglet.clock.schedule_interval(on_draw, 1/60)
+    window.clear
+    batch.draw()
+'''
+@window.event
+def on_draw():
+    batch = pyglet.graphics.Batch()
+    buffer = []
+    for i in range(0,10):
+        buffer.append(shapes.Rectangle(200, 200 + 20 * i, 10, 10, color=(55, 55, 255), batch=batch))
+    window.clear
+    batch.draw()
+'''
+
+
+
 pyglet.app.run()
-            
