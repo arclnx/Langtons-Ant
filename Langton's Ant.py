@@ -11,7 +11,6 @@ class Ant:
     def __init__(self, x_pos, y_pos):
         self.location = [x_pos, y_pos]
         self.direction = [1,0]
-        self.color = 0
     
     def turn(self, direction):
         if direction == 'R':
@@ -24,6 +23,9 @@ class Ant:
         self.location = [
             direction + location for direction, location in zip(
             [item * distance for item in self.direction], self.location)]
+    
+    def iterate(self):
+        GRID[self.location[0]][self.location[1]] = 
     
     def debug(self):
         print('direction' + str(self.direction))
