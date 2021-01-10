@@ -10,8 +10,6 @@ SIZE = 4
 COLORS = [(255,0,0), (0,0,255)]
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
 RULES = ['L', 'R']
-# Set up pyglet window
-window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
 
 # Ant
 class Ant:
@@ -38,12 +36,18 @@ class Ant:
         self.turn(RULES[index])  # Turn
         self.move(1)  # Move
 
-    
     def debug(self):
         print('direction' + str(self.direction))
         print('location' + str(self.location))
 
-my_ant = Ant(0,0)
+my_ant = Ant(100,100)
+
+for i in range(100):
+    my_ant.iterate()
+
+
+# Set up pyglet window
+window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
 
 @window.event
 def on_draw():
@@ -61,5 +65,5 @@ def on_draw():
     window.clear
     batch.draw()
 
-clock.schedule_interval(my_ant.iterate, .1)
+# Draw screen
 pyglet.app.run()
