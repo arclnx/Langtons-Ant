@@ -10,6 +10,8 @@ SIZE = 4
 COLORS = [(255,0,0), (0,0,255)]
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
 RULES = ['L', 'R']
+# Set up pyglet window
+window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
 
 # Ant
 class Ant:
@@ -42,13 +44,6 @@ class Ant:
 
 my_ant = Ant(100,100)
 
-for i in range(100):
-    my_ant.iterate()
-
-
-# Set up pyglet window
-window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
-
 @window.event
 def on_draw():
     batch = pyglet.graphics.Batch()
@@ -58,12 +53,15 @@ def on_draw():
             buffer.append(shapes.Rectangle(
                     x * SIZE, 
                     y * SIZE,
-                    SIZE - 1,
-                    SIZE - 1,
+                    SIZE,
+                    SIZE,
                     color=GRID[x][y],
                     batch = batch))
     window.clear
     batch.draw()
 
-# Draw screen
+def update(dt):
+    my_ant.iterate()
+
+pyglet.clock.schedule_interval(update, 1/60)
 pyglet.app.run()
