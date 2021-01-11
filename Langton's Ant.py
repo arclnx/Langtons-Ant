@@ -34,19 +34,20 @@ class Ant:
             [item * distance for item in self.direction], self.location)]
         self.location = [self.location[0] % WIDTH, self.location[1] % HEIGHT]  # Wrap over edge
     
-    def iterate(self):
-        index = COLORS.index(GRID[self.location[0]][self.location[1]])  # Find index of current color
-        GRID[self.location[0]][self.location[1]] = COLORS[
-                (index + 1) % len(COLORS)]  # Set cell to next color
-        self.turn(RULES[index])  # Turn
-        self.move(1)  # Move
-        self.buffer.append(shapes.Rectangle(
-                    self.location[0] * SIZE, 
-                    self.location[1] * SIZE,
-                    SIZE,
-                    SIZE,
-                    color=GRID[self.location[0]][self.location[1]],
-                    batch = self.batch))
+    def iterate(self, iterations):
+        for iteration in range(iterations):
+            index = COLORS.index(GRID[self.location[0]][self.location[1]])  # Find index of current color
+            GRID[self.location[0]][self.location[1]] = COLORS[
+                    (index + 1) % len(COLORS)]  # Set cell to next color
+            self.turn(RULES[index])  # Turn
+            self.move(1)  # Move
+            self.buffer.append(shapes.Rectangle(
+                        self.location[0] * SIZE, 
+                        self.location[1] * SIZE,
+                        SIZE,
+                        SIZE,
+                        color=GRID[self.location[0]][self.location[1]],
+                        batch = self.batch))
 
     def debug(self):
         print('direction' + str(self.direction))
@@ -56,12 +57,11 @@ my_ant = Ant(100,100)
 
 @window.event
 def on_draw():
-    my_ant.iterate()
-
-def update(dt):
-    my_ant.iterate()
     Ant.batch.draw()
     Ant.buffer = []
 
+def update(dt):
+    my_ant.iterate(10)
+   
 pyglet.clock.schedule_interval(update, 1)
 pyglet.app.run()
