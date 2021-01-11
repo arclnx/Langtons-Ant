@@ -1,7 +1,7 @@
 import pyglet
 from pyglet import shapes
 from pyglet import clock
-import time
+
 
 # Set up global variables
 WIDTH = 250
