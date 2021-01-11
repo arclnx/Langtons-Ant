@@ -15,6 +15,9 @@ window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
 
 # Ant
 class Ant:
+    batch = pyglet.graphics.Batch()
+    buffer = []
+
     def __init__(self, x_pos, y_pos):
         self.location = [x_pos, y_pos]
         self.direction = [1,0]
@@ -37,6 +40,13 @@ class Ant:
                 (index + 1) % len(COLORS)]  # Set cell to next color
         self.turn(RULES[index])  # Turn
         self.move(1)  # Move
+        self.buffer.append(shapes.Rectangle(
+                    self.location[0] * SIZE, 
+                    self.location[1] * SIZE,
+                    SIZE,
+                    SIZE,
+                    color=GRID[self.location[0]][self.location[1]],
+                    batch = self.batch))
 
     def debug(self):
         print('direction' + str(self.direction))
@@ -46,22 +56,11 @@ my_ant = Ant(100,100)
 
 @window.event
 def on_draw():
-    batch = pyglet.graphics.Batch()
-    buffer = []
-    for x in range(WIDTH):
-        for y in range(HEIGHT):
-            buffer.append(shapes.Rectangle(
-                    x * SIZE, 
-                    y * SIZE,
-                    SIZE,
-                    SIZE,
-                    color=GRID[x][y],
-                    batch = batch))
-    window.clear
-    batch.draw()
+    Ant.batch.draw()
+    Ant.buffer = []
 
 def update(dt):
     my_ant.iterate()
 
-pyglet.clock.schedule_interval(update, 1/60)
+pyglet.clock.schedule_interval(update, 1/500)
 pyglet.app.run()
