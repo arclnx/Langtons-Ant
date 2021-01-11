@@ -63,5 +63,5 @@ def on_draw():
 def update(dt):
     my_ant.iterate(10)
    
-pyglet.clock.schedule_interval(update, 1)
+pyglet.clock.schedule_interval(update, 1/10000)
 pyglet.app.run()
