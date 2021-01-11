@@ -56,11 +56,12 @@ my_ant = Ant(100,100)
 
 @window.event
 def on_draw():
-    Ant.batch.draw()
-    Ant.buffer = []
+    my_ant.iterate()
 
 def update(dt):
     my_ant.iterate()
+    Ant.batch.draw()
+    Ant.buffer = []
 
-pyglet.clock.schedule_interval(update, 1/500)
+pyglet.clock.schedule_interval(update, 1)
 pyglet.app.run()
