@@ -4,12 +4,12 @@ from pyglet import clock
  
  
 # Set up global variables
-WIDTH = 250
-HEIGHT = 250
-SIZE = 4
-COLORS = [(255,0,0), (0,0,255)]
+WIDTH = 480
+HEIGHT = 270
+SIZE = 2
+COLORS = [(255,0,0), (0,255,0), (0,0,255)]
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
-RULES = ['L', 'R']
+RULES = ['L', 'R', 'L']
 # Set up pyglet window
 window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
  
@@ -34,7 +34,7 @@ class Grid:
                         color=COLORS[0],
                         batch = batch)
  
-grid = Grid(WIDTH, HEIGHT)
+asdf = Grid(WIDTH, HEIGHT)
  
 # Ant
 class Ant:
@@ -49,8 +49,12 @@ class Ant:
         if direction == 'R':
             self.direction = [self.direction[1], -1 * self.direction[0]]
         if direction == 'L':
-            self.direction = [-1 * self.direction[1],self.direction[0]]
-    
+            self.direction = [-1 * self.direction[1], self.direction[0]]
+        if direction == 'U':
+            self.direction = [-1 * self.direction[0], self.direction[1]]
+        if direction == 'N':
+            self.directiom = self.direction
+
     def move(self, distance):
         self.location = [
             direction + location for direction, location in zip(
@@ -70,7 +74,7 @@ class Ant:
         print('direction' + str(self.direction))
         print('location' + str(self.location))
  
-my_ant = Ant(100,100, grid)
+my_ant = Ant(100,100, asdf)
  
 @window.event
 def on_draw():
@@ -79,8 +83,8 @@ def on_draw():
     fps_display.draw()
  
 def update(dt):
-    my_ant.iterate(10)
+    my_ant.iterate(1000)
    
-pyglet.clock.schedule_interval(update, 1/1000)
+pyglet.clock.schedule_interval(update, 1/60)
  
 pyglet.app.run()
