@@ -4,14 +4,14 @@ from pyglet import clock
  
  
 # Set up global variables
-WIDTH = 250
-HEIGHT = 250
+WIDTH = 480
+HEIGHT = 270
 SIZE = 4
-COLORS = [(255,0,0), (0,0,255)]
+COLORS = [(255,0,0), (0,255,0), (0,0,255)]
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
-RULES = ['L', 'R']
+RULES = ['L', 'R', 'L']
 # Set up pyglet window
-window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
+window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = True)
  
 fps_display = pyglet.window.FPSDisplay(window)
  
@@ -79,8 +79,8 @@ def on_draw():
     fps_display.draw()
  
 def update(dt):
-    my_ant.iterate(10)
+    my_ant.iterate(5)
    
-pyglet.clock.schedule_interval(update, 1/1000)
+pyglet.clock.schedule_interval(update, 1/60)
  
 pyglet.app.run()
