@@ -1,15 +1,19 @@
 import pyglet
 from pyglet import shapes
 from pyglet import clock
- 
+
+import colorsys
  
 # Set up global variables
 WIDTH = 480
 HEIGHT = 270
 SIZE = 2
 COLORS = [(255,0,0), (0,255,0), (0,0,255)]
-GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
 RULES = ['L', 'R', 'L']
+
+#This grid keeps track of the color numbers, the class 'Grid' keeps track of the actual pyglet recteangles and batching
+GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
+
 # Set up pyglet window
 window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
  
@@ -34,7 +38,7 @@ class Grid:
                         color=COLORS[0],
                         batch = batch)
  
-asdf = Grid(WIDTH, HEIGHT)
+my_grid = Grid(WIDTH, HEIGHT)
  
 # Ant
 class Ant:
@@ -74,7 +78,7 @@ class Ant:
         print('direction' + str(self.direction))
         print('location' + str(self.location))
  
-my_ant = Ant(100,100, asdf)
+my_ant = Ant(100,100, my_grid)
  
 @window.event
 def on_draw():
