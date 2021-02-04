@@ -7,7 +7,7 @@ import colorsys
 # Set up global variables
 WIDTH = 480
 HEIGHT = 270
-SIZE = 2
+SIZE = 4
 COLORS = [(255,0,0), (0,255,0), (0,0,255)]
 RULES = ['L', 'R', 'L']
 
@@ -15,7 +15,7 @@ RULES = ['L', 'R', 'L']
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
 
 # Set up pyglet window
-window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
+window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = True)
  
 fps_display = pyglet.window.FPSDisplay(window)
  
@@ -87,7 +87,7 @@ def on_draw():
     fps_display.draw()
  
 def update(dt):
-    my_ant.iterate(1000)
+    my_ant.iterate(2)
    
 pyglet.clock.schedule_interval(update, 1/60)
  
