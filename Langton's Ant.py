@@ -8,8 +8,8 @@ import colorsys
 WIDTH = 480
 HEIGHT = 270
 SIZE = 4
-COLORS = [(255,0,0), (0,255,0), (0,0,255)]
-RULES = ['L', 'R', 'L']
+COLORS = [(255,0,0),(0,0,255)]
+RULES = ['L', 'R']
 
 #This grid keeps track of the color numbers, the class 'Grid' keeps track of the actual pyglet recteangles and batching
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
@@ -87,7 +87,7 @@ def on_draw():
     fps_display.draw()
  
 def update(dt):
-    my_ant.iterate(2)
+    my_ant.iterate(50)
    
 pyglet.clock.schedule_interval(update, 1/60)
  
