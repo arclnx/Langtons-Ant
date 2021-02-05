@@ -5,18 +5,21 @@ from pyglet import clock
 import colorsys as color
  
 # Set up global variables
-WIDTH = 480
-HEIGHT = 270
-SIZE = 4
-RULES = ['L', 'R', 'L', 'L']
+WIDTH = 240
+HEIGHT = 135
+SIZE = 8
+RULES = ['L', 'R', 'L', 'L', 'R', 'L']
 
+COLOR_FILE = open('colors.txt').readlines()
+COLORS = list(map(eval, [COLOR_FILE[color][1:-2] for color in range(0, 63, 63//len(RULES))]))
+COLORS = COLORS[:-1]
+print(COLORS)
 SPEED = 2
-
 #This grid keeps track of the color numbers, the class 'Grid' keeps track of the actual pyglet recteangles and batching
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
 
 # Set up pyglet window
-window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE)
+window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = True)
  
 fps_display = pyglet.window.FPSDisplay(window)
  
@@ -88,7 +91,7 @@ def on_draw():
     fps_display.draw()
  
 def update(dt):
-    my_ant.iterate(50)
+    my_ant.iterate(10)
    
 pyglet.clock.schedule_interval(update, 1/60)
  
