@@ -2,14 +2,17 @@ import pyglet
 from pyglet import shapes
 from pyglet import clock
 
-import colorsys
+import colorsys as color
  
 # Set up global variables
 WIDTH = 480
 HEIGHT = 270
-SIZE = 2
-COLORS = [(255,0,0),(0,0,255)]
-RULES = ['L', 'R']
+SIZE = 4
+RULES = ['L', 'R', 'L', 'L']
+COLORS = [color.hsv_to_rgb(hue/100, 1, 1) for hue in range(0, 100, 100 // len(RULES))]
+COLORS = [tuple(int(255 * tuple) for tuple in color) for color in COLORS]
+print(COLORS)
+SPEED = 2
 
 #This grid keeps track of the color numbers, the class 'Grid' keeps track of the actual pyglet recteangles and batching
 GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
