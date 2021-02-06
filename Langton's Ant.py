@@ -10,11 +10,11 @@ HEIGHT = 135
 SIZE = 6
 RULES = ['L', 'R']
 
+# Set up colors
 COLOR_FILE = open('colors.txt').readlines()
-COLORS = list(map(eval, [COLOR_FILE[color][1:-2] for color in range(0, len(RULES), 1)]))
+COLORS = list(map(eval, COLOR_FILE[:len(RULES)]))
 print(COLORS)
 SPEED = 2
-#This grid keeps track of the color numbers, the class 'Grid' keeps track of the actual pyglet recteangles and batching
 
 # Set up pyglet window
 window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = False)
