@@ -8,7 +8,7 @@ import colorsys as color
 WIDTH = 240
 HEIGHT = 135
 SIZE = 6
-RULES = ['L', 'R', 'R']
+RULES = ['L', 'R']
 
 COLOR_FILE = open('colors.txt').readlines()
 COLORS = list(map(eval, [COLOR_FILE[color][1:-2] for color in range(0, len(RULES), 1)]))
@@ -81,7 +81,8 @@ class Ant:
         print('direction' + str(self.direction))
         print('location' + str(self.location))
  
-my_ant = Ant(100,100, my_grid)
+my_ant1 = Ant(100,100, my_grid)
+my_ant2 = Ant(30,125, my_grid)
  
 @window.event
 def on_draw():
@@ -90,7 +91,8 @@ def on_draw():
     fps_display.draw()
  
 def update(dt):
-    my_ant.iterate(50)
+    my_ant1.iterate(2)
+    my_ant2.iterate(2)
    
 pyglet.clock.schedule_interval(update, 1/60)
  
