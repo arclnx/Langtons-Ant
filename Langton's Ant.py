@@ -8,7 +8,7 @@ import colorsys as color
 WIDTH = 240
 HEIGHT = 135
 SIZE = 6
-RULES = ['L', 'L', 'R', 'L', 'R', 'R', 'L', 'R']
+RULES = ['L', 'R']
 
 COLOR_FILE = open('colors.txt').readlines()
 COLORS = list(map(eval, [COLOR_FILE[color][1:-2] for color in range(0, len(RULES), 1)]))
