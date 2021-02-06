@@ -15,7 +15,6 @@ COLORS = list(map(eval, [COLOR_FILE[color][1:-2] for color in range(0, len(RULES
 print(COLORS)
 SPEED = 2
 #This grid keeps track of the color numbers, the class 'Grid' keeps track of the actual pyglet recteangles and batching
-GRID = [[COLORS[0] for y in range(HEIGHT)] for x in range(WIDTH)] # Fill Grid with first color
 
 # Set up pyglet window
 window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = False)
@@ -70,20 +69,18 @@ class Ant:
     
     def iterate(self, iterations):
         for iteration in range(iterations):
-            index = COLORS.index(GRID[self.location[0]][self.location[1]])  # Find index of current color
-            GRID[self.location[0]][self.location[1]] = COLORS[
+            index = COLORS.index(tuple(self.grid.rects[self.location[0]][self.location[1]].color))  # Find index of current color
+            self.grid.rects[self.location[0]][self.location[1]].color = COLORS[
                     (index + 1) % len(COLORS)]  # Set cell to next color
             self.turn(RULES[index])  # Turn
             self.move(1)  # Move
-            self.grid.rects[self.location[0]][self.location[1]].color = GRID[self.location[0]][self.location[1]]
  
     def debug(self):
         print('direction' + str(self.direction))
         print('location' + str(self.location))
  
-my_ant1 = Ant(100,100, my_grid)
-my_ant2 = Ant(30,125, my_grid)
- 
+my_ant = Ant(100,100, my_grid)
+
 @window.event
 def on_draw():
     window.clear()
@@ -91,9 +88,8 @@ def on_draw():
     fps_display.draw()
  
 def update(dt):
-    my_ant1.iterate(2)
-    my_ant2.iterate(2)
-   
+    my_ant.iterate(2)
+
 pyglet.clock.schedule_interval(update, 1/60)
  
 pyglet.app.run()
