@@ -7,17 +7,44 @@ from pyglet.window import key
 WIDTH = 240
 HEIGHT = 135
 SIZE = 6
-RULES = ['L', 'R']
+RULES = ['L', 'R', 'R']
 SPEED = 2
-
+PAUSED = False
 # Set up colors
 COLOR_FILE = open('colors.txt').readlines()
 COLORS = list(map(eval, COLOR_FILE[:len(RULES)]))
 
 # Set up pyglet window
 window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = False)
-fps_display = pyglet.window.FPSDisplay(window)
 batch = pyglet.graphics.Batch()
+text = pyglet.graphics.Batch()
+
+# Set up text displays
+fps_display = pyglet.window.FPSDisplay(window)
+speed = pyglet.text.Label('Speed (iterations/frame): ' + str(SPEED),
+                          font_name='Arial',
+                          font_size=16,
+                          x=100, y=5,
+                          anchor_x='left', anchor_y='bottom',
+                          color = (255,255,255,255),
+                          batch = text)
+pause_label = pyglet.text.Label('Paused' if PAUSED else '',
+                          font_name='Arial',
+                          font_size=16,
+                          x=400, y=5,
+                          anchor_x='left', anchor_y='bottom',
+                          color = (255,0,0,255),
+                          batch = text)
+
+# Set up function to update text displays
+def update_labels():
+    speed.text = 'Speed (iterations/frame): ' + str(SPEED)
+    pause_label.text = 'Paused' if PAUSED else ''
+
+# Function to pause/unpause the simulation
+def pause():
+    global PAUSED
+    PAUSED = not(PAUSED)
 
 
 # Grid
@@ -81,11 +108,15 @@ class Ant:
 my_ant = Ant(100,100, my_grid)
 
 
-# Draw the screen every fram
+# Draw the screen every frame
 @window.event
 def on_draw():
     window.clear()
+
+    update_labels()
+
     batch.draw()
+    text.draw()
     fps_display.draw()
 
 
@@ -97,12 +128,19 @@ def on_key_press(symbol, modifiers):
         SPEED += 2
     if symbol == key.DOWN:
         SPEED -= 2
+    if symbol == key.LEFT:
+        SPEED -= 10
+    if symbol == key.RIGHT:
+        SPEED += 10
+    SPEED = max(SPEED, 0)    
+    if symbol == key.SPACE:
+        pause()
         
 
 # Actions to peform every 1/60 of a second
 def update(dt):
-    my_ant.iterate(SPEED)
-
+    global PAUSED
+    my_ant.iterate(SPEED if not PAUSED else 0)
 
 pyglet.clock.schedule_interval(update, 1/60)
  
