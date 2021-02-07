@@ -1,28 +1,26 @@
 import pyglet
 from pyglet import shapes
 from pyglet import clock
-
-import colorsys as color
+from pyglet.window import key
  
 # Set up global variables
 WIDTH = 240
 HEIGHT = 135
 SIZE = 6
 RULES = ['L', 'R']
+SPEED = 2
 
 # Set up colors
 COLOR_FILE = open('colors.txt').readlines()
 COLORS = list(map(eval, COLOR_FILE[:len(RULES)]))
-print(COLORS)
-SPEED = 2
 
 # Set up pyglet window
 window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = False)
- 
 fps_display = pyglet.window.FPSDisplay(window)
- 
 batch = pyglet.graphics.Batch()
- 
+
+
+# Grid
 class Grid:
     def __init__(self, width, height):
         self.width = width
@@ -41,7 +39,8 @@ class Grid:
                         batch = batch)
  
 my_grid = Grid(WIDTH, HEIGHT)
- 
+
+
 # Ant
 class Ant:
     buffer = []
@@ -50,7 +49,7 @@ class Ant:
         self.location = [x_pos, y_pos]
         self.direction = [1,0]
         self.grid = grid
-    
+
     def turn(self, direction):
         if direction == 'R':
             self.direction = [self.direction[1], -1 * self.direction[0]]
@@ -81,14 +80,29 @@ class Ant:
  
 my_ant = Ant(100,100, my_grid)
 
+
+# Draw the screen every fram
 @window.event
 def on_draw():
     window.clear()
     batch.draw()
     fps_display.draw()
- 
+
+
+# Handle keypresses
+@window.event
+def on_key_press(symbol, modifiers):
+    global SPEED
+    if symbol == key.UP:
+        SPEED += 2
+    if symbol == key.DOWN:
+        SPEED -= 2
+        
+
+# Actions to peform every 1/60 of a second
 def update(dt):
-    my_ant.iterate(2)
+    my_ant.iterate(SPEED)
+
 
 pyglet.clock.schedule_interval(update, 1/60)
  
