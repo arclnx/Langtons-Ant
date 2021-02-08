@@ -10,6 +10,7 @@ SIZE = 6
 RULES = ['L', 'R', 'R']
 SPEED = 2
 PAUSED = False
+ITERATIONS = 0
 # Set up colors
 COLOR_FILE = open('colors.txt').readlines()
 COLORS = list(map(eval, COLOR_FILE[:len(RULES)]))
@@ -31,15 +32,23 @@ speed = pyglet.text.Label('Speed (iterations/frame): ' + str(SPEED),
 pause_label = pyglet.text.Label('Paused' if PAUSED else '',
                           font_name='Arial',
                           font_size=16,
-                          x=400, y=5,
+                          x=575, y=5,
                           anchor_x='left', anchor_y='bottom',
                           color = (255,0,0,255),
+                          batch = text)
+iter_label = pyglet.text.Label('Iterations: ' + str(ITERATIONS),
+                          font_name='Arial',
+                          font_size=16,
+                          x=400, y=5,
+                          anchor_x='left', anchor_y='bottom',
+                          color = (255,255,255,255),
                           batch = text)
 
 # Set up function to update text displays
 def update_labels():
     speed.text = 'Speed (iterations/frame): ' + str(SPEED)
     pause_label.text = 'Paused' if PAUSED else ''
+    iter_label.text = 'Iterations: ' + str(ITERATIONS)
 
 # Function to pause/unpause the simulation
 def pause():
@@ -125,9 +134,9 @@ def on_draw():
 def on_key_press(symbol, modifiers):
     global SPEED
     if symbol == key.UP:
-        SPEED += 2
+        SPEED += 1
     if symbol == key.DOWN:
-        SPEED -= 2
+        SPEED -= 1
     if symbol == key.LEFT:
         SPEED -= 10
     if symbol == key.RIGHT:
@@ -139,8 +148,9 @@ def on_key_press(symbol, modifiers):
 
 # Actions to peform every 1/60 of a second
 def update(dt):
-    global PAUSED
+    global ITERATIONS
     my_ant.iterate(SPEED if not PAUSED else 0)
+    ITERATIONS += SPEED if not PAUSED else 0
 
 pyglet.clock.schedule_interval(update, 1/60)
  
