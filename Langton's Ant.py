@@ -1,7 +1,7 @@
 import pyglet
 from pyglet import shapes
 from pyglet import clock
-from pyglet.window import key
+from pyglet.window import key, mouse
  
 # Set up global variables
 WIDTH = 240
@@ -11,6 +11,7 @@ RULES = ['L', 'R', 'R']
 SPEED = 2
 PAUSED = False
 ITERATIONS = 0
+
 # Set up colors
 COLOR_FILE = open('colors.txt').readlines()
 COLORS = list(map(eval, COLOR_FILE[:len(RULES)]))
@@ -32,7 +33,7 @@ speed = pyglet.text.Label('Speed (iterations/frame): ' + str(SPEED),
 pause_label = pyglet.text.Label('Paused' if PAUSED else '',
                           font_name='Arial',
                           font_size=16,
-                          x=575, y=5,
+                          x=700, y=5,
                           anchor_x='left', anchor_y='bottom',
                           color = (255,0,0,255),
                           batch = text)
@@ -43,12 +44,21 @@ iter_label = pyglet.text.Label('Iterations: ' + str(ITERATIONS),
                           anchor_x='left', anchor_y='bottom',
                           color = (255,255,255,255),
                           batch = text)
+mouse_label =pyglet.text.Label('x=mouse_x, y=mouse_y, color=mouse_color',
+                          font_name='Arial',
+                          font_size=16,
+                          x=WIDTH*SIZE-225
+                          , y=5,
+                          anchor_x='left', anchor_y='bottom',
+                          color = (255,255,255,255),
+                          batch = text)
 
 # Set up function to update text displays
 def update_labels():
     speed.text = 'Speed (iterations/frame): ' + str(SPEED)
     pause_label.text = 'Paused' if PAUSED else ''
     iter_label.text = 'Iterations: ' + str(ITERATIONS)
+
 
 # Function to pause/unpause the simulation
 def pause():
@@ -144,7 +154,14 @@ def on_key_press(symbol, modifiers):
     SPEED = max(SPEED, 0)    
     if symbol == key.SPACE:
         pause()
-        
+
+@window.event
+def on_mouse_motion(x, y, dx, dy):
+    mouse_label.text = ('x=' + str(x//SIZE + 1).zfill(3) +
+                        ', y=' + str(y//SIZE + 1).zfill(3) +
+                        ', color=' + str(COLORS.index(tuple(my_ant.grid.rects[x//SIZE][y//SIZE].color))))
+
+
 
 # Actions to peform every 1/60 of a second
 def update(dt):
