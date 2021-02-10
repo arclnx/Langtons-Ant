@@ -21,6 +21,9 @@ window = pyglet.window.Window(WIDTH * SIZE, HEIGHT * SIZE, fullscreen = False)
 batch = pyglet.graphics.Batch()
 text = pyglet.graphics.Batch()
 
+# Change cursor to crosshair
+window.set_mouse_cursor(window.get_system_mouse_cursor(window.CURSOR_CROSSHAIR))
+
 # Set up text displays
 fps_display = pyglet.window.FPSDisplay(window)
 speed = pyglet.text.Label('Speed (iterations/frame): ' + str(SPEED),
