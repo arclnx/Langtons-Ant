@@ -4,9 +4,9 @@ from pyglet import clock
 from pyglet.window import key, mouse
  
 # Set up global variables
-WIDTH = 240
-HEIGHT = 135
-SIZE = 6
+WIDTH = 480
+HEIGHT = 270
+SIZE = 3
 RULES = ['L', 'R']
 SPEED = 2
 PAUSED = False
@@ -26,7 +26,7 @@ window.set_mouse_cursor(window.get_system_mouse_cursor(window.CURSOR_CROSSHAIR))
 
 # Set up text displays
 fps_display = pyglet.window.FPSDisplay(window)
-speed = pyglet.text.Label('Speed (iterations/frame): ' + str(SPEED),
+speed_label = pyglet.text.Label('Speed (iterations/frame): ',
                           font_name='Arial',
                           font_size=16,
                           x=100, y=5,
@@ -58,7 +58,7 @@ mouse_label =pyglet.text.Label('x=mouse_x, y=mouse_y, color=mouse_color',
 
 # Set up function to update text displays
 def update_labels():
-    speed.text = 'Speed (iterations/frame): ' + str(SPEED)
+    speed_label.text = 'Speed (iterations/frame): ' + str(SPEED)
     pause_label.text = 'Paused' if PAUSED else ''
     iter_label.text = 'Iterations: ' + str(ITERATIONS)
 
@@ -88,7 +88,6 @@ class Grid:
                         batch = batch)
  
 my_grid = Grid(WIDTH, HEIGHT)
-
 
 # Ant
 class Ant:
@@ -173,5 +172,5 @@ def update(dt):
     ITERATIONS += SPEED if not PAUSED else 0
 
 pyglet.clock.schedule_interval(update, 1/60)
- 
+
 pyglet.app.run()
