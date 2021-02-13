@@ -2,12 +2,14 @@ import pyglet
 from pyglet import shapes
 from pyglet import clock
 from pyglet.window import key, mouse
+import random as rand
  
 # Set up global variables
-WIDTH = 480
-HEIGHT = 270
-SIZE = 3
-RULES = ['L', 'L', 'R', 'R']
+WIDTH = 240
+HEIGHT = 135
+SIZE = 6
+RULES = [['L','R'][rand.randint(0,1)] for turn in range(20)]
+#['L', 'L', 'R', 'R']
 SPEED = 2
 PAUSED = False
 ITERATIONS = 0
