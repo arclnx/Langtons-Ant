@@ -7,7 +7,7 @@ from pyglet.window import key, mouse
 WIDTH = 480
 HEIGHT = 270
 SIZE = 3
-RULES = ['L', 'R']
+RULES = ['L', 'L', 'R', 'R']
 SPEED = 2
 PAUSED = False
 ITERATIONS = 0
