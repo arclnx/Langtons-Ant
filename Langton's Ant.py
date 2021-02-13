@@ -8,7 +8,7 @@ import random as rand
 WIDTH = 240
 HEIGHT = 135
 SIZE = 6
-RULES = [['L','R'][rand.randint(0,1)] for turn in range(20)]
+RULES = [['L','R'][rand.randint(0,1)] for turn in range(2 )]
 #['L', 'L', 'R', 'R']
 SPEED = 2
 PAUSED = False
