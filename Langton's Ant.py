@@ -89,7 +89,7 @@ class Grid:
                         color=COLORS[0],
                         batch = batch)
     
-    def zoom(factor, center_x, center_y):
+    def zoom(self, factor, center_x, center_y):
         global SIZE
         for x in self.rects:
             for y in self.rects:
