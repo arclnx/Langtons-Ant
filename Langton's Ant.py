@@ -8,7 +8,8 @@ import random as rand
 WIDTH = 240
 HEIGHT = 135
 SIZE = 6
-RULES = [['L','R'][rand.randint(0,1)] for turn in range(2 )]
+RULES = ['L', 'R']
+#[['L','R'][rand.randint(0,1)] for turn in range(2 )]
 #['L', 'L', 'R', 'R']
 SPEED = 2
 PAUSED = False
@@ -73,6 +74,9 @@ def pause():
 
 # Grid
 class Grid:
+    scale = 1
+    grid_x = 0
+    grid_y = 0
     def __init__(self, width, height):
         self.width = width
         self.height = height
@@ -88,12 +92,28 @@ class Grid:
                         SIZE,
                         color=COLORS[0],
                         batch = batch)
- 
+    
+    def zoom(self, factor, center_x, center_y):
+        for x in range(WIDTH):
+            for y in range(HEIGHT):
+                rect =  self.rects[x][y]
+                self.rects[x][y].x = (rect.x - center_x)*factor + center_x
+                self.rects[x][y].y = (rect.y - center_y)*factor + center_y
+                self.rects[x][y].width = rect.width * factor
+                self.rects[x][y].height = rect.height * factor
+        
+    def move(self, move_x, move_y):
+        for x in range(WIDTH):
+            for y in range(HEIGHT):
+                rect =  self.rects[x][y]
+                self.rects[x][y].x = rect.x + move_x
+                self.rects[x][y].y = rect.y + move_y
+
+
 my_grid = Grid(WIDTH, HEIGHT)
 
 # Ant
 class Ant:
-    buffer = []
  
     def __init__(self, x_pos, y_pos, grid):
         self.location = [x_pos, y_pos]
@@ -158,12 +178,27 @@ def on_key_press(symbol, modifiers):
     SPEED = max(SPEED, 0)    
     if symbol == key.SPACE:
         pause()
+    if symbol == key.W:
+        my_grid.zoom(2, 0, 0)
 
+# Handle mouse motion.
 @window.event
 def on_mouse_motion(x, y, dx, dy):
     mouse_label.text = ('x=' + str(x//SIZE + 1).zfill(3) +
                         ', y=' + str(y//SIZE + 1).zfill(3) +
                         ', color=' + str(COLORS.index(tuple(my_ant.grid.rects[x//SIZE][y//SIZE].color))))
+
+@window.event
+def on_mouse_scroll(x, y, scroll_x, scroll_y):
+    if scroll_y > 0:
+        my_grid.zoom(2, x, y)
+    if scroll_y < 0:
+        my_grid.zoom(.5, x, y)
+
+@window.event
+def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
+    if buttons & mouse.MIDDLE:
+        my_grid.move(dx, dy)
 
 
 
