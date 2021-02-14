@@ -88,12 +88,19 @@ class Grid:
                         SIZE,
                         color=COLORS[0],
                         batch = batch)
- 
+    
+    def zoom(factor, center_x, center_y):
+        global SIZE
+        for x in self.rects:
+            for y in self.rects:
+                rect =  self.rects[x][y]
+                self.rects[x][y].x = (rect.x - center_x)*factor + center_x
+                self.rects[x][y].y = (rect.y - center_y)*factor + center_y
+
 my_grid = Grid(WIDTH, HEIGHT)
 
 # Ant
 class Ant:
-    buffer = []
  
     def __init__(self, x_pos, y_pos, grid):
         self.location = [x_pos, y_pos]
@@ -159,6 +166,7 @@ def on_key_press(symbol, modifiers):
     if symbol == key.SPACE:
         pause()
 
+# Handle mouse motion.
 @window.event
 def on_mouse_motion(x, y, dx, dy):
     mouse_label.text = ('x=' + str(x//SIZE + 1).zfill(3) +
