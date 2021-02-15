@@ -8,7 +8,8 @@ import random as rand
 WIDTH = 240
 HEIGHT = 135
 SIZE = 6
-RULES = ['L', 'R']
+RULES = ['L', 'L', 'R', 'R']
+#['L', 'R']
 #[['L','R'][rand.randint(0,1)] for turn in range(2 )]
 #['L', 'L', 'R', 'R']
 SPEED = 2
@@ -101,7 +102,7 @@ class Grid:
                 self.rects[x][y].y = (rect.y - center_y)*factor + center_y
                 self.rects[x][y].width = rect.width * factor
                 self.rects[x][y].height = rect.height * factor
-        
+
     def move(self, move_x, move_y):
         for x in range(WIDTH):
             for y in range(HEIGHT):
