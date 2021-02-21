@@ -93,8 +93,7 @@ class Grid:
                         SIZE,
                         SIZE,
                         color=COLORS[0],
-                        batch = batch,
-                        group = cam_group)
+                        batch = batch)
     
     def zoom(self, factor, center_x, center_y):
         for x in range(WIDTH):
@@ -180,8 +179,6 @@ def on_key_press(symbol, modifiers):
     SPEED = max(SPEED, 0)    
     if symbol == key.SPACE:
         pause()
-    if symbol == key.W:
-        my_grid.zoom(2, 0, 0)
 
 # Handle mouse motion.
 @window.event
