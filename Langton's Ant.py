@@ -2,6 +2,7 @@ import pyglet
 from pyglet import shapes
 from pyglet import clock
 from pyglet.window import key, mouse
+import pyglet.gl as gl
 import random as rand
  
 # Set up global variables
@@ -92,7 +93,8 @@ class Grid:
                         SIZE,
                         SIZE,
                         color=COLORS[0],
-                        batch = batch)
+                        batch = batch,
+                        group = cam_group)
     
     def zoom(self, factor, center_x, center_y):
         for x in range(WIDTH):
@@ -109,7 +111,6 @@ class Grid:
                 rect =  self.rects[x][y]
                 self.rects[x][y].x = rect.x + move_x
                 self.rects[x][y].y = rect.y + move_y
-
 
 my_grid = Grid(WIDTH, HEIGHT)
 
