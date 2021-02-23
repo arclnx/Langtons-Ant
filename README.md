@@ -5,4 +5,4 @@ Requires pyglet
 
 Use arrow keys to change simulation speed, space to pause.
 
-Middle mouse drage to pan, scroll to zoom - still very slow.
+Middle mouse drag to pan, scroll to zoom - still very slow.
