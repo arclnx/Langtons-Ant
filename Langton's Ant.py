@@ -6,12 +6,13 @@ import pyglet.gl as gl
 import random as rand
  
 # Set up global variables
-WIDTH = 240
-HEIGHT = 135
+WIDTH = 320
+HEIGHT = 180-48
 SIZE = 6
-RULES = ['L', 'L', 'R', 'R']
+RULES = [['L','R'][rand.randint(0,1)] for turn in range(5)]
+#['L', 'R', 'R', 'R',]
 #['L', 'R']
-#[['L','R'][rand.randint(0,1)] for turn in range(2 )]
+#
 #['L', 'L', 'R', 'R']
 SPEED = 2
 PAUSED = False
